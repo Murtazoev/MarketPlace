@@ -1,0 +1,35 @@
+﻿@model List<WebApplication2.Models.Product>
+
+<div class="text-center">
+    <h1 class="display-4">List of Products</h1>
+    @foreach(Product productt in @Model)
+    {
+        <div class="w3-container w3-center">
+            <h3>Product @productt.Id</h3>
+            @if (productt.images != null)
+            {
+                <img src="/image/@productt.images" alt="Image" style="width:500px;height:300px;">
+            }
+            else
+            {
+                <img src="" alt="Image" style="width:80%">                
+            }
+            <h5>@productt.Name</h5>
+            <div class="w3-section">
+                <p>@productt.Info</p>
+                <!-- 
+                    class="w3-button w3-red"
+                      <input type="hidden" name="product" value="@productt"/>
+                -->
+                <a asp-controller="Client" asp-action="Edit" asp-route-id="@productt.Id">
+
+                    <button type="submit" class="w3-button w3-green">Edit</button>
+                </a>
+                <a asp-controller="Client" asp-action="Delete" asp-route-id="@productt.Id">
+                   
+                        <button type="submit" class="w3-button w3-green">Delete</button>
+                </a>
+            </div>
+        </div>
+    }
+</div> 

@@ -1,0 +1,17 @@
+﻿@model WebApplication2.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Let's Edit a Product</h1>  
+    <div>
+        <form asp-action="Edit" method="post" asp-route-id="@Model.Id">
+            <a>ID : @Model.Id</a>
+            <a>Name : </a> <input asp-for="Name" placeholder="@Model.Name"/>
+            <a>Info : </a> <input asp-for="Info" placeholder="@Model.Info"/>
+            <button type="submit" class="btn btn-primary">Change a Product</button>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\C#\\Web\\WebApplication2\\WebApplication2\\wwwroot\\image\\20240727210742064.png",
+      "PackagePath": "staticwebassets\\image\\20240727210742064.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Web\\WebApplication2\\WebApplication2\\wwwroot\\image\\20240727213107339.png",
+      "PackagePath": "staticwebassets\\image\\20240727213107339.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Web\\WebApplication2\\WebApplication2\\wwwroot\\image\\20240727215900661.png",
+      "PackagePath": "staticwebassets\\image\\20240727215900661.png"
+    },
+    {
       "Id": "D:\\Projects\\C#\\Web\\WebApplication2\\WebApplication2\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

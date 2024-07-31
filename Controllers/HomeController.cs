@@ -25,13 +25,6 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        public IActionResult Product()
-        {
-            newProduct = new Product();
-            newProduct.Name = "Co kaden Mardum !";
-            return View(newProduct);
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
