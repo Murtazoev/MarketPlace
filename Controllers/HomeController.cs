@@ -7,17 +7,18 @@ namespace WebApplication2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        Product newProduct;
-
-        public HomeController(ILogger<HomeController> logger)
+        
+        private readonly DataBase _dataBase;
+        public HomeController(ILogger<HomeController> logger, DataBase dataBase)
         {
             _logger = logger;
+            _dataBase = dataBase;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var ListOfProducts = _dataBase.GetListProducts();
+            return View(ListOfProducts);
         }
 
         public IActionResult Privacy()

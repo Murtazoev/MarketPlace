@@ -10,17 +10,19 @@ namespace WebApplication2.Controllers
     {
         static Client newClient;
         static ProductController productController;
+        private int newId = 0;
 
-        DataBase dataBase = new DataBase();
+        private readonly DataBase _dataBase;
 
-        public ClientController ()
+        public ClientController (DataBase dataBase)
         {
-            if (newClient == null)
+            if (newClient == null)  
             {
                 newClient = new Client();
                 ProductController productController = new ProductController();
                 newClient.products = new List<Product>();
             }
+            _dataBase = dataBase;
         }
         [HttpGet]
         public IActionResult Profile()
@@ -55,44 +57,34 @@ namespace WebApplication2.Controllers
                 images = fileName,
                 Price = 0,
             };
-            if (newClient.products.Count == 0)
-                product.Id = 0;
-            else
-                product.Id = newClient.products.Last().Id - 1;
-            newClient.products.Add(product);
-            return RedirectToAction("List_Clients");
-        }
-        public IActionResult List_Clients()
-        {
-            var listOfProducts = dataBase.GetListProducts();
-            return View(listOfProducts);
+            newId = _dataBase.NumberOfProducts();
+            product.Id = newId;
+            _dataBase.AddProduct(product);
+            return RedirectToAction("Index" , "Home");
         }
         // [Route("/ClientController/removeProduct/{id}")]
         public IActionResult Delete(int id)
         {
-            Product product = newClient.products.Find(x => x.Id == id);
-            if (product == null)
-                return RedirectToAction("List_Clients");
-            newClient.products.Remove(product);
-            return RedirectToAction("List_Clients");
+            Product product = _dataBase.SearchProduct(id);
+            _dataBase.DeleteProduct(product);
+            return RedirectToAction("Index" , "Home");
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Product product = newClient.products.Find(x => x.Id == id);
+            Product product = _dataBase.SearchProduct(id);
             if (product == null)
-                return RedirectToAction("List_Clients");
+                return RedirectToAction("Index" , "Home");
             return View(product);
         }
         [HttpPost]
         public IActionResult Edit(int id, Product product)
         {
-            Product newProduct = newClient.products.Find(x => x.Id == id) ;
-            if (newProduct == null)
-                return RedirectToAction("List_Clients");
-            newClient.products.Find(x => x.Id == id).Name = product.Name;
-            newClient.products.Find(x => x.Id == id).Info = product.Info;
-            return RedirectToAction("List_Clients");
+            if (_dataBase.SearchProduct(id) == null)
+                return RedirectToAction("Index" , "Home");
+            Console.WriteLine(product.Name);
+            _dataBase.Update(id, product);
+            return RedirectToAction("Index" , "Home");
         }
     }
 }
