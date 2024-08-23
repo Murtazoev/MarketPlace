@@ -1,10 +1,13 @@
 ﻿@model List<WebApplication2.Models.Product>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-
 <div class="text-center">
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <h1>Welcome @User.Identity.Name !</h1>
+            <p> co kadi dodarjon !</p>
+        }
+    }
     <h1 class="display-4">List of Products</h1>
     @foreach(Product productt in @Model)
     {

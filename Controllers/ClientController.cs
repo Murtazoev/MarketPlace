@@ -20,7 +20,6 @@ namespace WebApplication2.Controllers
             {
                 newClient = new Client();
                 ProductController productController = new ProductController();
-                newClient.products = new List<Product>();
             }
             _dataBase = dataBase;
         }
@@ -34,7 +33,7 @@ namespace WebApplication2.Controllers
         {
             if (newProduct.images == null)
             {
-                ModelState.AddModelError("images" , "The image is required");
+                ModelState.AddModelError("images" , "The image is required momange");
                 return View();
             }
             if (ModelState.IsValid != true)
@@ -46,6 +45,7 @@ namespace WebApplication2.Controllers
             fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
             fileName += Path.GetExtension(newProduct.images.FileName);
             string ImageFullPath = Directory.GetCurrentDirectory() + "/wwwroot/image/" + fileName;
+            /// Sending the Products data to DataBase
             using (var stream = System.IO.File.Create(ImageFullPath))
             {
                 newProduct.images.CopyTo(stream);
@@ -57,8 +57,7 @@ namespace WebApplication2.Controllers
                 images = fileName,
                 Price = 0,
             };
-            newId = _dataBase.NumberOfProducts();
-            product.Id = newId;
+            product.Id = _dataBase.NextProductID();
             _dataBase.AddProduct(product);
             return RedirectToAction("Index" , "Home");
         }

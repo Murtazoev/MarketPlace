@@ -1,11 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApplication2.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme
+    ).AddCookie(option =>
+    {
+        option.LoginPath = "/Home/Login";
+        // option.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
 
 builder.Services.AddDbContext<DataBase>();
 
@@ -23,6 +32,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

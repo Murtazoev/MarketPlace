@@ -1,0 +1,44 @@
+﻿@model WebApplication2.Models.NewClient;
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Let's Create a you an Account</h1>
+
+    <!-- Form should post to the same URL it was rendered from -->
+    <form asp-action="Register" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="file" asp-for="Avatar" />1
+            <span asp-validation-for="Avatar" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Name"></label>
+            <input type="text" asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Surname"></label>
+            <input type="text" asp-for="Surname" />
+        </div>
+        <div>
+            <label asp-for="Mail"></label>
+            <input type="text" asp-for="Mail" />
+        </div>
+        <div>
+            <label asp-for="ContactNumber"></label>
+            <input type="text" asp-for="ContactNumber" />
+        </div>        
+        <div>
+            <label asp-for="Password"></label>
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword"></label>
+            <input type="password" asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

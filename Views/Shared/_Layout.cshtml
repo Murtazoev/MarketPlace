@@ -29,12 +29,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Profile" >Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="List_Clients">Products</a>
-                        </li>                        
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Edit">Edit</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ListOfClients">Clients</a>
                         </li>
                     </ul>
+                    <!-- -->
+                    <div class="tnb-right-section">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">LogOut</a>
+                            </li>
+                        </ul>
+
+                        <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                        </li>
+                        </ul>
+                    </div>                    
                 </div>
             </div>
         </nav>

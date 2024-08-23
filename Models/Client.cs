@@ -2,11 +2,12 @@
 {
     public class Client
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Contact_Number { get; set; }
-        public List<Product> products { get; set; }
+        public string AvatarLocation { get; set; }
+        public string Password { get; set; }
     }
 }

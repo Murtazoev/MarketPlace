@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication2.Models
 {
@@ -69,6 +70,22 @@ namespace WebApplication2.Models
                     connection.Close();
                 }
             }
+        }
+        public int NextProductID()
+        {
+            int nextId = 0;
+            using (SqlConnection connection = new SqlConnection (connectionString))
+            {
+                string query = "SELECT TOP 1 id FROM Product ORDER BY id DESC";
+                using (SqlCommand command = new SqlCommand(query,connection))
+                {
+                    connection.Open();
+                    nextId = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            nextId++;
+            return nextId;
         }
         /// Delete holi bud nest
         public void DeleteProduct(Product product)
@@ -156,6 +173,118 @@ namespace WebApplication2.Models
                     connection.Close();
                 }
             }
+        }
+        public void AddClient(Client client)
+        {
+            Console.WriteLine(client.Contact_Number);
+            Console.WriteLine("this is contact number");
+            using (SqlConnection connection = new SqlConnection (connectionString))
+            {
+                string query = "INSERT INTO Clients (Id , Name , Surname , Email , Contact , Password , Avatar) VALUES (@Id , @Name , @Surname , @Email , @Contact , @Password , @Avatar)";
+                using (SqlCommand command = new SqlCommand(query , connection))
+                {
+                    command.Parameters.AddWithValue("@Id", client.Id);
+                    command.Parameters.AddWithValue("@Name", client.Name);
+                    command.Parameters.AddWithValue("@Surname", client.Surname);
+                    command.Parameters.AddWithValue("@Email", client.Email);
+                    command.Parameters.AddWithValue("@Contact", client.Contact_Number);
+                    command.Parameters.AddWithValue("@Password", client.Password);
+                    command.Parameters.AddWithValue("@Avatar", client.AvatarLocation);
+                    connection.Open();
+                    int ok = command.ExecuteNonQuery();
+                    if (ok == 0)
+                        Console.WriteLine("Couldn't upload the Client to the Client Table !!!");
+                    connection.Close();
+                }
+            }
+        }
+
+        public List<Client> GetClients()
+        {
+            List<Client> clients = new List<Client> ();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Clients";
+                SqlCommand command = new SqlCommand(query , connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataType = new DataTable();
+                connection.Open();
+                adapter.Fill(dataType);
+                connection.Close();
+                foreach(DataRow i in dataType.Rows)
+                {
+                    clients.Add(new Client
+                    {
+                        Id = Convert.ToInt32(i["Id"]),
+                        Name = i["Name"].ToString(),
+                        Surname = i["Surname"].ToString(),
+                        AvatarLocation = i["Avatar"].ToString(),
+                        Contact_Number = i["Contact"].ToString(),
+                        Email = i["Email"].ToString(),
+                        Password = i["Password"].ToString()
+                    }); ; ;
+                }
+            }
+            return clients;
+        }
+        public int NumberOfClients()
+        {
+            int NumberOfClients;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(Id) FROM Clients";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    NumberOfClients = (int)command.ExecuteScalar(); // ExecuteScalar returns the value from the query
+                    connection.Close();
+                }
+            }
+            return NumberOfClients;
+        }
+        public int NextClientID()
+        {
+            int nextId = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 id FROM Clients ORDER BY id DESC";
+                using (SqlCommand command = new SqlCommand(query , connection))
+                {
+                    connection.Open();
+                    nextId = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            nextId++;
+            return nextId;
+        }
+        public Client SearchClient(string Name)
+        {
+            Client newClient = new Client();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Clients WHERE Name = '" + Name + "';";
+                using (SqlCommand command = new SqlCommand(query , connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataType = new DataTable();
+                    connection.Open();
+                    adapter.Fill(dataType);
+                    connection.Close();
+                    if (adapter == null)
+                        return newClient;
+                    newClient = new Client {
+                        Id = Convert.ToInt32(dataType.Rows[0]["ID"]),
+                        Name = dataType.Rows[0]["Name"].ToString() ,
+                        Surname = dataType.Rows[0]["Surname"].ToString() ,
+                        Email = dataType.Rows[0]["Email"].ToString(),
+                        AvatarLocation = dataType.Rows[0]["Avatar"].ToString(),
+                        Contact_Number = dataType.Rows[0]["Contact"].ToString(),
+                        Password = dataType.Rows[0]["Password"].ToString()
+                    } ;
+                }
+            }
+            return newClient;
         }
     }
 }
