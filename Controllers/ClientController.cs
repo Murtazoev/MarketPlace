@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using System.Reflection;
@@ -24,12 +25,13 @@ namespace WebApplication2.Controllers
             _dataBase = dataBase;
         }
         [HttpGet]
-        public IActionResult Profile()
+        public IActionResult AddProduct()
         {
             return View(new NewProduct());
         }
         [HttpPost]
-        public IActionResult Profile(NewProduct newProduct )
+        [Authorize]
+        public IActionResult AddProduct(NewProduct newProduct)
         {
             if (newProduct.images == null)
             {
@@ -58,32 +60,45 @@ namespace WebApplication2.Controllers
                 Price = 0,
             };
             product.Id = _dataBase.NextProductID();
+            Client owner = new Client();
+            owner = _dataBase.SearchClient(User.Identity.Name);
+            product.Owner = owner.Id;
             _dataBase.AddProduct(product);
-            return RedirectToAction("Index" , "Home");
+            return RedirectToAction("MyPage" , "Home");
         }
         // [Route("/ClientController/removeProduct/{id}")]
+        [Authorize]
         public IActionResult Delete(int id)
         {
+            Client client = new Client();
+            client = _dataBase.SearchClient(User.Identity.Name);
             Product product = _dataBase.SearchProduct(id);
-            _dataBase.DeleteProduct(product);
-            return RedirectToAction("Index" , "Home");
+            if (client.Id == product.Owner)
+                _dataBase.DeleteProduct(product);
+            return RedirectToAction("MyPage" , "Home");
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            Console.WriteLine("Hello Boss");
             Product product = _dataBase.SearchProduct(id);
-            if (product == null)
-                return RedirectToAction("Index" , "Home");
+            Client client = new Client();
+            client = _dataBase.SearchClient(User.Identity.Name);
+            Console.WriteLine(User.Identity.Name);
+            Console.WriteLine(client.Id + " " + product.Owner);
+            Console.WriteLine(product.Name + " " + product.Id + " " + product.Owner);
+            if (product.Owner != client.Id || product == null)
+                return RedirectToAction("MyPage" , "Home");
             return View(product);
         }
         [HttpPost]
         public IActionResult Edit(int id, Product product)
         {
             if (_dataBase.SearchProduct(id) == null)
-                return RedirectToAction("Index" , "Home");
+                return RedirectToAction("MyPage" , "Home");
             Console.WriteLine(product.Name);
             _dataBase.Update(id, product);
-            return RedirectToAction("Index" , "Home");
+            return RedirectToAction("MyPage" , "Home");
         }
     }
 }

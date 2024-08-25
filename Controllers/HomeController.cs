@@ -25,6 +25,13 @@ namespace WebApplication2.Controllers
             var ListOfProducts = _dataBase.GetListProducts();
             return View(ListOfProducts);
         }
+        [HttpPost]
+        public IActionResult Index(Product product)
+        {
+            Console.WriteLine("Ma da hami darunm"); 
+            // Buy(product);
+            return RedirectToAction("Buy" , "Home" , product);
+        }
         [HttpGet]
         public IActionResult Register()
         {
@@ -154,6 +161,16 @@ namespace WebApplication2.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             Console.WriteLine("User Logged Out");
             return RedirectToAction("Login");
+        }
+        public IActionResult MyPage()
+        {
+            Client client = _dataBase.SearchClient(User.Identity.Name);
+            var list = _dataBase.GetClientsProduct(client.Id);
+            return View(list);
+        }
+        public IActionResult Buy(Product prod)
+        {
+            return View(prod);
         }
     }
 }

@@ -7,8 +7,8 @@
 <div class="text-center">
     <h1 class="display-4">Let's Create a New Product</h1>
 
-    <!-- Form should post to the same URL it was rendered from -->   
-    <form asp-action="Profile" method="post" enctype="multipart/form-data">        
+    <!-- Form should post to the same URL it was rendered from -->
+    <form asp-action="AddProduct" method="post" enctype="multipart/form-data">
         <div>
             <label asp-for="Name"></label>
             <input type="text" asp-for="Name" />
@@ -16,6 +16,10 @@
         <div>
             <label asp-for="Info"></label>
             <input type="text" asp-for="Info" />
+        </div>
+        <div>
+            <label asp-for="Price"></label>
+            <span asp-validation-for="Price" class="text-danger"></span>
         </div>
         <div>
             <!--  <label asp-for="images"></label>   -->

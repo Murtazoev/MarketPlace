@@ -9,8 +9,11 @@
     <div>
         <form asp-action="Edit" method="post" asp-route-id="@Model.Id">
             <a>ID : @Model.Id</a>
+            <img src="/image/@Model.images" alt="Image" style="width:500px;height:300px;">
+
             <a>Name : </a> <input asp-for="Name" placeholder="@Model.Name"/>
             <a>Info : </a> <input asp-for="Info" placeholder="@Model.Info"/>
+            <a>Price : </a> <input asp-for="Price" placeholder="@Model.Price"/>
             <button type="submit" class="btn btn-primary">Change a Product</button>
         </form>
     </div>

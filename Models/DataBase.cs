@@ -55,7 +55,7 @@ namespace WebApplication2.Models
             Console.WriteLine(product.Id + " " + product.Name + " " + product.Info);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Product (Id , Name , Info , Price , Image) VALUES (@Id , @Name , @Info , @Price , @Image)";
+                string query = "INSERT INTO Product (Id , Name , Info , Price , Image, Owner) VALUES (@Id , @Name , @Info , @Price , @Image , @Owner)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Id", product.Id);
@@ -63,6 +63,7 @@ namespace WebApplication2.Models
                     command.Parameters.AddWithValue("@Info" , product.Info);
                     command.Parameters.AddWithValue("@Price", product.Price);
                     command.Parameters.AddWithValue("@Image", product.images);
+                    command.Parameters.AddWithValue("@Owner", product.Owner);
                     connection.Open();
                     int ok = command.ExecuteNonQuery();
                     if (ok == 0)
@@ -80,7 +81,9 @@ namespace WebApplication2.Models
                 using (SqlCommand command = new SqlCommand(query,connection))
                 {
                     connection.Open();
-                    nextId = (int)command.ExecuteScalar();
+                    object result = command.ExecuteScalar();
+                    if (result != null)
+                        nextId = (int)result;
                     connection.Close();
                 }
             }
@@ -126,7 +129,8 @@ namespace WebApplication2.Models
                         Name = dr["Name"].ToString(),
                         Info = dr["Info"].ToString(),
                         images = dr["Image"].ToString(),
-                        Price = Convert.ToDecimal(dr["Price"])
+                        Price = Convert.ToDecimal(dr["Price"]),
+                        Owner = Convert.ToInt32(dr["Owner"])
                     }); ;
                 }
             }
@@ -285,6 +289,36 @@ namespace WebApplication2.Models
                 }
             }
             return newClient;
+        }
+        public List<Product> GetClientsProduct(int Id)
+        {
+            var list = new List<Product>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Product WHERE Owner = '" + Id + "';";
+                using (SqlCommand command = new SqlCommand(query , connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable datatable = new DataTable();
+                    connection.Open();
+                    adapter.Fill(datatable);
+                    if (adapter == null)
+                        return list;
+                    foreach (DataRow row in datatable.Rows)
+                    {
+                        list.Add(new Product
+                        {
+                            Id = Convert.ToInt32(row["Id"]),
+                            Name = row["Name"].ToString(),
+                            Info = row["Info"].ToString(),
+                            images = row["Image"].ToString(),
+                            Price = Convert.ToDecimal(row["Price"]),
+                            Owner = Convert.ToInt32(row["Owner"])
+                        });;
+                    }
+                }
+            }
+            return list;
         }
     }
 }

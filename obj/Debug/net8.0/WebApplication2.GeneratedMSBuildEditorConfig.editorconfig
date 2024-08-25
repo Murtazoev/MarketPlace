@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projects\C#\Web\WebApplication2\WebApplication2
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Client/AddProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEFkZFByb2R1Y3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Client/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -26,8 +30,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XExpc3RfQ2xpZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Client/Profile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XFByb2ZpbGUuY3NodG1s
+[D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Home/Buy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCdXkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Home/Index.cshtml]
@@ -40,6 +44,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Home/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Home/MyPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNeVBhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/C\#/Web/WebApplication2/WebApplication2/Views/Home/Privacy.cshtml]

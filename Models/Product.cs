@@ -10,5 +10,6 @@ namespace WebApplication2.Models
         public string Name { get; set; }
         public string Info {  get; set; }
         public decimal Price { get; set; }
+        public int Owner {  get; set; }
     }
 }

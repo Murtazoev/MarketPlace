@@ -1,42 +1,32 @@
 ﻿@model List<WebApplication2.Models.Product>
 
 <div class="text-center">
-    @{
-        if (User.Identity.IsAuthenticated)
-        {
-            <h1>Welcome @User.Identity.Name !</h1>
-            <p> co kadi dodarjon !</p>
-        }
-    }
     <h1 class="display-4">List of Products</h1>
     @foreach(Product productt in @Model)
     {
-        <div class="w3-container w3-center">
-            <h3>Product @productt.Id</h3>
-            @if (productt.images != null)
-            {
-                <img src="/image/@productt.images" alt="Image" style="width:500px;height:300px;">
-            }
-            else
-            {
-                <img src="" alt="Image" style="width:80%">                
-            }
-            <h5>@productt.Name</h5>
-            <div class="w3-section">
-                <p>@productt.Info</p>
-                <!-- 
-                    class="w3-button w3-red"
-                      <input type="hidden" name="product" value="@productt"/>
-                -->
-                <a asp-controller="Client" asp-action="Edit" asp-route-id="@productt.Id">
-
-                    <button type="submit" class="w3-button w3-green">Edit</button>
-                </a>
-                <a asp-controller="Client" asp-action="Delete" asp-route-id="@productt.Id">
-                   
-                        <button type="submit" class="w3-button w3-green">Delete</button>
-                </a>
+        <form asp-controller="Home" asp-action="Index" asp-method="post" enctype="multipart/form-data">
+            <div class="w3-container w3-center">
+                @if (productt.images != null)
+                {
+                    <button type="submit" style="border:none; background:none; padding:0;">
+                        <img src="/image/@productt.images" alt="Image" style="width:500px;height:300px;">
+                    </button>
+                }
+                else
+                {
+                    <button type="submit" style="border:none; background:none; padding:0;">
+                        <img src="" alt="Image" style="width:80%">                
+                    </button>
+                }
+                <h5>@productt.Name </h5> <h5 style="color: red"> @productt.Price </h5>
+                <!-- Hidden inputs to pass product data -->
+                <input type="hidden" name="Id" value="@productt.Id" />
+                <input type="hidden" name="Name" value="@productt.Name" />
+                <input type="hidden" name="Info" value="@productt.Info" />
+                <input type="hidden" name="Price" value="@productt.Price" />
+                <input type="hidden" name="images" value="@productt.images" />
+                <input type="hidden" name="Owner" value="@productt.Owner" />
             </div>
-        </div>
+        </form>
     }
 </div> 
